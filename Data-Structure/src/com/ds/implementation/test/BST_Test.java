@@ -10,7 +10,6 @@ import com.ds.implementation.Node;
 public class BST_Test {
 	
 	private BST<Character,Byte> bst;
-	private BinaryTreePrinter<Character, Byte> bTreePrinter;
 	
 	@Test
 	public void addTest(){
@@ -19,8 +18,7 @@ public class BST_Test {
 		bst.addNode('A');
 		bst.addNode('D');
 		System.out.println(bst.getBSTHeight());
-		bTreePrinter = new BinaryTreePrinter<Character, Byte>();
-		bTreePrinter.printNode(bst.getRoot());
+		BinaryTreePrinter.printNode(bst.getRoot());
 	}
 	
 	//@Test

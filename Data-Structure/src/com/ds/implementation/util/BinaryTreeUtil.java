@@ -4,15 +4,17 @@ import java.util.LinkedList;
 
 import com.ds.implementation.Node;
 
-public class BinaryTreeUtil<T extends Comparable<T>, E> {
+public class BinaryTreeUtil {
 	
 	/**
 	 * Height.
 	 *
+	 * @param <T> the generic type
+	 * @param <E> the element type
 	 * @param node the node
 	 * @return the int
 	 */
-	public int height(Node<T,E> node){
+	public static <T extends Comparable<T>, E> int height(Node<T,E> node){
 		int height = 0;
 		
 		if(node==null){
@@ -30,14 +32,17 @@ public class BinaryTreeUtil<T extends Comparable<T>, E> {
 		return height;
 	}
 	
+
 	/**
 	 * Search.
 	 *
+	 * @param <T> the generic type
+	 * @param <E> the element type
 	 * @param value the value
 	 * @param node the node
 	 * @return the node
 	 */
-	public Node<T,E> search(T value, Node<T,E> node){
+	public static <T extends Comparable<T>, E> Node<T,E> search(T value, Node<T,E> node){
 		if(node == null)
 			return null;
 			
@@ -54,12 +59,14 @@ public class BinaryTreeUtil<T extends Comparable<T>, E> {
 	}
 	
 	/**
-	 * In-order sequence.
+	 * Inorder sequence.
 	 *
+	 * @param <T> the generic type
+	 * @param <E> the element type
 	 * @param node the node
 	 * @return the linked list
 	 */
-	public LinkedList<Node<T,E>> inorderSequence(Node<T,E> node){
+	public static <T extends Comparable<T>, E> LinkedList<Node<T,E>> inorderSequence(Node<T,E> node){
 		if(node == null)
 			return null;
 
@@ -79,13 +86,16 @@ public class BinaryTreeUtil<T extends Comparable<T>, E> {
 	}
 	
 	
+
 	/**
-	 * Pre-order sequence.
+	 * Preorder sequence.
 	 *
+	 * @param <T> the generic type
+	 * @param <E> the element type
 	 * @param node the node
 	 * @return the linked list
 	 */
-	public LinkedList<Node<T,E>> preorderSequence(Node<T,E> node){
+	public static <T extends Comparable<T>, E> LinkedList<Node<T,E>> preorderSequence(Node<T,E> node){
 		if(node == null)
 			return null;
 
@@ -105,12 +115,14 @@ public class BinaryTreeUtil<T extends Comparable<T>, E> {
 	}
 	
 	/**
-	 * Post-order sequence.
+	 * Postorder sequence.
 	 *
+	 * @param <T> the generic type
+	 * @param <E> the element type
 	 * @param node the node
 	 * @return the linked list
 	 */
-	public LinkedList<Node<T,E>> postorderSequence(Node<T,E> node){
+	public static <T extends Comparable<T>, E> LinkedList<Node<T,E>> postorderSequence(Node<T,E> node){
 		if(node == null)
 			return null;
 
@@ -132,9 +144,11 @@ public class BinaryTreeUtil<T extends Comparable<T>, E> {
 	/**
 	 * Delete node.
 	 *
+	 * @param <T> the generic type
+	 * @param <E> the element type
 	 * @param toBeDeleted the to be deleted
 	 */
-	public void deleteNode(Node<T,E> toBeDeleted){
+	public static <T extends Comparable<T>, E> void deleteNode(Node<T,E> toBeDeleted){
 		if(toBeDeleted.equals(toBeDeleted.getParentNode().getLeftNode())){
 			toBeDeleted.getParentNode().setLeftNode(null);
 		} else if(toBeDeleted.equals(toBeDeleted.getParentNode().getRightNode())){

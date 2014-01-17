@@ -20,7 +20,6 @@ import com.ds.implementation.util.BinaryTreeUtil;
 public class RedBlackTree<T extends Comparable<T>, E> {
 	
 	Node<T,Byte> root;
-	BinaryTreeUtil<T,Byte> util = new BinaryTreeUtil<T,Byte>();
 	
 	/**
 	 * Instantiates a new red black tree.
@@ -38,7 +37,7 @@ public class RedBlackTree<T extends Comparable<T>, E> {
 	 * @param value the value
 	 */
 	public void addNode(T value){
-		Node<T,Byte> temp = util.search(value, root);
+		Node<T,Byte> temp = BinaryTreeUtil.search(value, root);
 
 		//Inserted node as per BST and default red color
 		Node<T,Byte> newNode = new Node<T,Byte>(value, null, null, temp, new Byte("0"));

@@ -12,9 +12,6 @@ import com.ds.implementation.util.BinaryTreeUtil;
 public class BST<T extends Comparable<T>, E> {
 	
 	private final Node<T,Byte> root;
-	private BinaryTreeUtil<T,Byte> util = new BinaryTreeUtil<T,Byte>();
-	
-	
 	
 	/**
 	 * Gets the root.
@@ -41,7 +38,7 @@ public class BST<T extends Comparable<T>, E> {
 	 * @param value the value
 	 */
 	public void addNode(T value){
-		Node<T,Byte> temp = util.search(value, root);
+		Node<T,Byte> temp = BinaryTreeUtil.search(value, root);
 
 		Node<T,Byte> newNode = new Node<T,Byte>(value,null,null,temp,null);
 		
@@ -59,7 +56,7 @@ public class BST<T extends Comparable<T>, E> {
 	 * @return the node
 	 */
 	public Node<T,Byte> searchNode(T value){
-		Node<T,Byte> node = util.search(value, root);
+		Node<T,Byte> node = BinaryTreeUtil.search(value, root);
 		
 		if(node.getValue().compareTo(value) == 0)
 			return node;
@@ -74,28 +71,28 @@ public class BST<T extends Comparable<T>, E> {
 	 * @return the node
 	 */
 	public Node<T,Byte> deleteNode(T value){
-		Node<T,Byte> toBeDeleted = util.search(value, root);
+		Node<T,Byte> toBeDeleted = BinaryTreeUtil.search(value, root);
 		
 		if(toBeDeleted.getValue().compareTo(value) == 0){
 			if(toBeDeleted.getLeftNode()==null &&
 					toBeDeleted.getRightNode()==null){
-				util.deleteNode(toBeDeleted);
+				BinaryTreeUtil.deleteNode(toBeDeleted);
 			}else if(toBeDeleted.getLeftNode()!=null &&
 					toBeDeleted.getRightNode()==null){
 				Node<T,Byte> temp = toBeDeleted.getLeftNode();
 				Node<T,Byte> parent = toBeDeleted.getParentNode();
-				util.deleteNode(toBeDeleted);
+				BinaryTreeUtil.deleteNode(toBeDeleted);
 				parent.setLeftNode(temp);
 			}else if(toBeDeleted.getLeftNode()==null &&
 					toBeDeleted.getRightNode()!=null){
 				Node<T,Byte> temp = toBeDeleted.getRightNode();
 				Node<T,Byte> parent = toBeDeleted.getParentNode();
-				util.deleteNode(toBeDeleted);
+				BinaryTreeUtil.deleteNode(toBeDeleted);
 				temp.setParentNode(parent);
 				parent.setRightNode(temp);
 			}else if(toBeDeleted.getLeftNode()!=null &&
 					toBeDeleted.getRightNode()!=null){
-				LinkedList<Node<T,Byte>> inorder = util.inorderSequence(toBeDeleted);
+				LinkedList<Node<T,Byte>> inorder = BinaryTreeUtil.inorderSequence(toBeDeleted);
 				
  			}
 		}
@@ -104,7 +101,7 @@ public class BST<T extends Comparable<T>, E> {
 	}
 	
 	public int getBSTHeight(){
-		return util.height(root)-1;
+		return BinaryTreeUtil.height(root)-1;
 	}
 	
 	/**
@@ -113,7 +110,7 @@ public class BST<T extends Comparable<T>, E> {
 	 * @return the linked list
 	 */
 	public LinkedList<Node<T,Byte>> inorderSequence(){
-		return util.inorderSequence(root);
+		return BinaryTreeUtil.inorderSequence(root);
 	}
 	
 	/**
@@ -122,7 +119,7 @@ public class BST<T extends Comparable<T>, E> {
 	 * @return the linked list
 	 */
 	public LinkedList<Node<T,Byte>> preorderSequence(){
-		return util.preorderSequence(root);
+		return BinaryTreeUtil.preorderSequence(root);
 	}
 
 	/**
@@ -131,7 +128,7 @@ public class BST<T extends Comparable<T>, E> {
 	 * @return the linked list
 	 */
 	public LinkedList<Node<T,Byte>> postorderSequence(){
-		return util.postorderSequence(root);
+		return BinaryTreeUtil.postorderSequence(root);
 	}
 	
 }

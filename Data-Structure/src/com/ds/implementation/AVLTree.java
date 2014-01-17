@@ -5,7 +5,6 @@ import com.ds.implementation.util.BinaryTreeUtil;
 public class AVLTree<T extends Comparable<T>, E> {
 	
 	private Node<T,Byte> root;
-	private final BinaryTreeUtil<T,Byte> util = new BinaryTreeUtil<T,Byte>();
 
 	public AVLTree(T value) {
 		super();
@@ -27,13 +26,21 @@ public class AVLTree<T extends Comparable<T>, E> {
 	 * @param value the value
 	 */
 	public void addNode(T value){
-		Node<T,Byte> temp = util.search(value, root);
-
-		//Inserted node as per BST and default red color
-		Node<T,Byte> newNode = new Node<T,Byte>(value, null, null, temp, null);
-		if(temp.getValue().compareTo(value) < 0){
+		Node<T,Byte> newNode = new Node<T,Byte>(value, null, null, null, null);
+		addNode(newNode);
+	}
+	
+	/**
+	 * Adds the node.
+	 *
+	 * @param newNode the new node
+	 */
+	public void addNode(Node<T,Byte> newNode){
+		Node<T,Byte> temp = BinaryTreeUtil.search(newNode.getValue(), root);
+		newNode.setParentNode(temp);
+		if(temp.getValue().compareTo(newNode.getValue()) < 0){
 			temp.setRightNode(newNode);
-		} else if(temp.getValue().compareTo(value) > 0){
+		} else if(temp.getValue().compareTo(newNode.getValue()) > 0){
 			temp.setLeftNode(newNode);
 		}
 		
@@ -41,17 +48,24 @@ public class AVLTree<T extends Comparable<T>, E> {
 		preserveAVL(temp.getParentNode());
 	}
 
+	/**
+	 * Preserve AVL Tree properties.
+	 *
+	 * @param parent the parent
+	 */
 	private void preserveAVL(Node<T,Byte> parent){
 		if(parent==null)
 			return;
 			
-		int leftHeight  = parent.getLeftNode() !=null ? util.height(parent.getLeftNode()) : 0;
-		int rightHeight = parent.getRightNode()!=null ? util.height(parent.getRightNode()): 0;
+		int leftHeight  = parent.getLeftNode() !=null ? BinaryTreeUtil.height(parent.getLeftNode()) : 0;
+		int rightHeight = parent.getRightNode()!=null ? BinaryTreeUtil.height(parent.getRightNode()): 0;
 		if(Math.abs(leftHeight-rightHeight)>1){
 			
+			//Balancing unbalanced subtree on the basis if left subtree is big or right subtree.
 			if(leftHeight>rightHeight){
 				
 				Node<T,Byte> leftNode = parent.getLeftNode();
+				//Rotation on the basis if left child of the parent node has right child or not.
 				if(leftNode.getRightNode()==null){
 					leftNode.setParentNode(parent.getParentNode());
 					leftNode.setRightNode(parent);
@@ -61,6 +75,24 @@ public class AVLTree<T extends Comparable<T>, E> {
 					
 					parent.setParentNode(leftNode);
 					parent.setLeftNode(null);
+				}else{
+					Node<T,Byte> grandRightNode = leftNode.getRightNode();
+					
+					//rearrangements for left node
+					leftNode.setRightNode(grandRightNode.getLeftNode());
+					leftNode.setParentNode(grandRightNode);
+					
+					Node<T,Byte> temp = grandRightNode.getRightNode();
+					//rearrangement for grandRight node
+					grandRightNode.setParentNode(parent.getParentNode());
+					grandRightNode.setLeftNode(leftNode);
+					grandRightNode.setRightNode(parent);
+					if(parent.getParentNode()==null)
+						root = grandRightNode;
+					
+					//rearrangement for parent node
+					parent.setParentNode(grandRightNode);
+					parent.setLeftNode(temp);
 				}
 					
 			}else{

@@ -4,22 +4,36 @@ import org.junit.Test;
 
 import com.ds.implementation.AVLTree;
 import com.ds.implementation.util.BinaryTreePrinter;
+import com.ds.implementation.util.NodeUtil;
 
 public class AVLTree_Test {
 	
 	private AVLTree<Character,Byte> tree;
-	private BinaryTreePrinter<Character, Byte> bTreePrinter;
 
-	
-	
 	@Test
-	public void addTest(){
+	public void addTest1(){
 		tree = new AVLTree<Character,Byte>('F');	
 		tree.addNode('B');
 		tree.addNode('A');
 		tree.addNode('D');
-		bTreePrinter = new BinaryTreePrinter<Character, Byte>();
-		bTreePrinter.printNode(tree.getRoot());
+		BinaryTreePrinter.printNode(tree.getRoot());
+	}
+	
+	@Test
+	public void addTest2(){
+		tree = new AVLTree<Character,Byte>('G');	
+		tree.addNode('C');
+		tree.addNode('E');
+		BinaryTreePrinter.printNode(tree.getRoot());
+	}
+
+	@Test
+	public void addTest3(){
+		tree = new AVLTree<Character,Byte>('G');	
+		tree.addNode('C');
+		tree.addNode(NodeUtil.getNodeWithBothChildObject('E', new Byte("1"), 'D', null, 'F', null));
+		
+		BinaryTreePrinter.printNode(tree.getRoot());
 	}
 
 }
