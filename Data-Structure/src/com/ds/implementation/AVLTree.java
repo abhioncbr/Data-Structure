@@ -2,6 +2,12 @@ package com.ds.implementation;
 
 import com.ds.implementation.util.BinaryTreeUtil;
 
+/**
+ * The Class AVLTree.
+ *
+ * @param <T> the generic type
+ * @param <E> the element type
+ */
 public class AVLTree<T extends Comparable<T>, E> {
 	
 	private Node<T,Byte> root;
@@ -45,7 +51,10 @@ public class AVLTree<T extends Comparable<T>, E> {
 		}
 		
 		//Rearrangement as per AVL tree properties
-		preserveAVL(temp.getParentNode());
+		if(temp.getParentNode()==null)
+			preserveHeightOnAddition(root);
+		else
+			preserveHeightOnAddition(temp.getParentNode());
 	}
 
 	/**
@@ -53,7 +62,7 @@ public class AVLTree<T extends Comparable<T>, E> {
 	 *
 	 * @param parent the parent
 	 */
-	private void preserveAVL(Node<T,Byte> parent){
+	private void preserveHeightOnAddition(Node<T,Byte> parent){
 		if(parent==null)
 			return;
 			
@@ -96,6 +105,41 @@ public class AVLTree<T extends Comparable<T>, E> {
 				}
 					
 			}else{
+				Node<T,Byte> rightNode = parent.getRightNode();
+				//Rotation on the basis if right child of the parent node has left child or not.
+				if(rightNode.getLeftNode()==null){
+					
+					//rearrangement for right node to become parent of parent node.
+					rightNode.setParentNode(parent.getParentNode());
+					rightNode.setLeftNode(parent);
+					
+					//In-case parent node is root
+					if(parent.getParentNode()==null){
+						root = rightNode;
+					}
+					
+					////rearrangement for parent node for becoming left node of right node..
+					parent.setParentNode(rightNode);
+					parent.setRightNode(null);
+				}else{
+					Node<T,Byte> grandLeftNode = rightNode.getLeftNode();
+					
+					//rearrangement for right node 
+					rightNode.setLeftNode(grandLeftNode.getRightNode());
+					rightNode.setParentNode(grandLeftNode);
+					
+					Node<T,Byte> temp = grandLeftNode.getLeftNode();
+					//rearrangement for grand left node
+					grandLeftNode.setLeftNode(parent);
+					grandLeftNode.setRightNode(rightNode);
+					grandLeftNode.setParentNode(parent.getParentNode());
+					if(parent.getParentNode()==null)
+						root = grandLeftNode;
+					
+					//rearrangement for parent node
+					parent.setParentNode(grandLeftNode);
+					parent.setRightNode(temp);
+				}
 				
 			}
 		}

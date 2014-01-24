@@ -5,6 +5,7 @@ package com.ds.implementation;
  *
  * @param <T> the generic type
  * @param <E> the element type
+ * @author Abhishek Sharma
  */
 public class Node<T extends Comparable<T>,E>{
 	
@@ -132,5 +133,45 @@ public class Node<T extends Comparable<T>,E>{
 	 */
 	public void setProperty(E property) {
 		this.property = property;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((leftNode == null) ? 0 : leftNode.hashCode());
+		result = prime * result
+				+ ((parentNode == null) ? 0 : parentNode.hashCode());
+		result = prime * result
+				+ ((property == null) ? 0 : property.hashCode());
+		result = prime * result
+				+ ((rightNode == null) ? 0 : rightNode.hashCode());
+		result = prime * result + ((value == null) ? 0 : value.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Node<T,E> other = (Node<T,E>) obj;
+		if (value == null) {
+			if (other.value != null)
+				return false;
+		} else if (!value.equals(other.value))
+			return false;
+		return true;
 	}
 }

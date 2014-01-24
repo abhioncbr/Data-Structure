@@ -6,6 +6,9 @@ import java.util.List;
 
 import com.ds.implementation.Node;
 
+/**
+ * The Class BinaryTreePrinter.
+ */
 public class BinaryTreePrinter{
 
     /**

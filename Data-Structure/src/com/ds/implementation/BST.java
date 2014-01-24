@@ -38,13 +38,22 @@ public class BST<T extends Comparable<T>, E> {
 	 * @param value the value
 	 */
 	public void addNode(T value){
-		Node<T,Byte> temp = BinaryTreeUtil.search(value, root);
-
-		Node<T,Byte> newNode = new Node<T,Byte>(value,null,null,temp,null);
+		Node<T,Byte> newNode = new Node<T,Byte>(value, null, null, null, null);
+		addNode(newNode);
+	}
+	
+	/**
+	 * Adds the node.
+	 *
+	 * @param newNode the new node
+	 */
+	public void addNode(Node<T,Byte> newNode){
+		Node<T,Byte> temp = BinaryTreeUtil.search(newNode.getValue(), root);
+		newNode.setParentNode(temp);
 		
-		if(temp.getValue().compareTo(value) < 0){
+		if(temp.getValue().compareTo(newNode.getValue()) < 0){
 			temp.setRightNode(newNode);
-		} else if(temp.getValue().compareTo(value) > 0){
+		} else if(temp.getValue().compareTo(newNode.getValue()) > 0){
 			temp.setLeftNode(newNode);
 		}
 	}
@@ -73,30 +82,16 @@ public class BST<T extends Comparable<T>, E> {
 	public Node<T,Byte> deleteNode(T value){
 		Node<T,Byte> toBeDeleted = BinaryTreeUtil.search(value, root);
 		
-		if(toBeDeleted.getValue().compareTo(value) == 0){
-			if(toBeDeleted.getLeftNode()==null &&
-					toBeDeleted.getRightNode()==null){
-				BinaryTreeUtil.deleteNode(toBeDeleted);
-			}else if(toBeDeleted.getLeftNode()!=null &&
-					toBeDeleted.getRightNode()==null){
-				Node<T,Byte> temp = toBeDeleted.getLeftNode();
-				Node<T,Byte> parent = toBeDeleted.getParentNode();
-				BinaryTreeUtil.deleteNode(toBeDeleted);
-				parent.setLeftNode(temp);
-			}else if(toBeDeleted.getLeftNode()==null &&
+		if(toBeDeleted.getValue().compareTo(value)==0)
+			if(toBeDeleted.getLeftNode()!=null &&
 					toBeDeleted.getRightNode()!=null){
-				Node<T,Byte> temp = toBeDeleted.getRightNode();
-				Node<T,Byte> parent = toBeDeleted.getParentNode();
-				BinaryTreeUtil.deleteNode(toBeDeleted);
-				temp.setParentNode(parent);
-				parent.setRightNode(temp);
-			}else if(toBeDeleted.getLeftNode()!=null &&
-					toBeDeleted.getRightNode()!=null){
-				LinkedList<Node<T,Byte>> inorder = BinaryTreeUtil.inorderSequence(toBeDeleted);
+				T inorderPredecessorValue= BinaryTreeUtil.getInorderPredecessor(toBeDeleted, root);
+				T inorderSuccessorValue  = BinaryTreeUtil.getInorderSuccessor(toBeDeleted, root);
+				Node<T,Byte> inorderPredecessor = inorderPredecessorValue!=null ? BinaryTreeUtil.search(inorderPredecessorValue, root) : null;
+				Node<T,Byte> inorderSuccessor = inorderSuccessorValue!=null ? BinaryTreeUtil.search(inorderSuccessorValue, root) : null;
+				return BinaryTreeUtil.deleteNode(toBeDeleted,inorderPredecessor, inorderSuccessor );
+			}else return BinaryTreeUtil.deleteNode(toBeDeleted);
 				
- 			}
-		}
-			
 		return null;
 	}
 	
@@ -104,7 +99,7 @@ public class BST<T extends Comparable<T>, E> {
 		return BinaryTreeUtil.height(root)-1;
 	}
 	
-	/**
+	/**o
 	 * In-order sequence.
 	 *
 	 * @return the linked list
